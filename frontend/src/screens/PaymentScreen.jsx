@@ -17,7 +17,7 @@ const PaymentScreen = () => {
     }
   }, [navigate, shippingAddress]);
 
-  const [paymentMethod, setPaymentMethod] = useState('PayPal');
+  const [paymentMethod, setPaymentMethod] = useState('Razorpay');
 
   const dispatch = useDispatch();
 
@@ -38,10 +38,10 @@ const PaymentScreen = () => {
             <Form.Check
               className='my-2'
               type='radio'
-              label='PayPal or Credit Card'
-              id='PayPal'
+              label='Razorpay (Credit Card, Debit Card, Net Banking, UPI)'
+              id='Razorpay'
               name='paymentMethod'
-              value='PayPal'
+              value='Razorpay'
               checked
               onChange={(e) => setPaymentMethod(e.target.value)}
             ></Form.Check>

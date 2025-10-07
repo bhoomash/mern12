@@ -2,7 +2,7 @@ import asyncHandler from '../middleware/asyncHandler.js';
 import Order from '../models/orderModel.js';
 import Product from '../models/productModel.js';
 import { calcPrices } from '../utils/calcPrices.js';
-import { verifyPayPalPayment, checkIfNewTransaction } from '../utils/paypal.js';
+import { verifyRazorpaySignature, fetchRazorpayPayment, createRazorpayOrder } from '../utils/razorpay.js';
 
 // @desc    Create new order
 // @route   POST /api/orders
@@ -87,33 +87,53 @@ const getOrderById = asyncHandler(async (req, res) => {
 // @route   PUT /api/orders/:id/pay
 // @access  Private
 const updateOrderToPaid = asyncHandler(async (req, res) => {
-  // NOTE: here we need to verify the payment was made to PayPal before marking
-  // the order as paid
-  const { verified, value } = await verifyPayPalPayment(req.body.id);
-  if (!verified) throw new Error('Payment not verified');
+  const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
 
-  // check if this transaction has been used before
-  const isNewTransaction = await checkIfNewTransaction(Order, req.body.id);
-  if (!isNewTransaction) throw new Error('Transaction has been used before');
+  // Verify Razorpay payment signature
+  const isValidSignature = verifyRazorpaySignature(
+    razorpay_order_id,
+    razorpay_payment_id,
+    razorpay_signature
+  );
+
+  if (!isValidSignature) {
+    res.status(400);
+    throw new Error('Invalid payment signature');
+  }
+
+  // Fetch payment details from Razorpay
+  const paymentDetails = await fetchRazorpayPayment(razorpay_payment_id);
 
   const order = await Order.findById(req.params.id);
 
   if (order) {
-    // check the correct amount was paid
-    const paidCorrectAmount = order.totalPrice.toString() === value;
-    if (!paidCorrectAmount) throw new Error('Incorrect amount paid');
+    // Check if payment amount matches order total
+    const paidAmount = paymentDetails.amount / 100; // Convert from paisa to rupees
+    const orderTotal = parseFloat(order.totalPrice);
+    
+    if (Math.abs(paidAmount - orderTotal) > 0.01) {
+      res.status(400);
+      throw new Error('Payment amount does not match order total');
+    }
+
+    // Check if payment is captured/success
+    if (paymentDetails.status !== 'captured') {
+      res.status(400);
+      throw new Error('Payment not captured');
+    }
 
     order.isPaid = true;
     order.paidAt = Date.now();
     order.paymentResult = {
-      id: req.body.id,
-      status: req.body.status,
-      update_time: req.body.update_time,
-      email_address: req.body.payer.email_address,
+      id: razorpay_payment_id,
+      status: paymentDetails.status,
+      update_time: new Date(paymentDetails.created_at * 1000),
+      email_address: paymentDetails.email || '',
+      razorpay_order_id: razorpay_order_id,
+      razorpay_signature: razorpay_signature,
     };
 
     const updatedOrder = await order.save();
-
     res.json(updatedOrder);
   } else {
     res.status(404);
@@ -148,6 +168,51 @@ const getOrders = asyncHandler(async (req, res) => {
   res.json(orders);
 });
 
+// @desc    Delete order
+// @route   DELETE /api/orders/:id
+// @access  Private/Admin
+const deleteOrder = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id);
+
+  if (order) {
+    await Order.deleteOne({ _id: order._id });
+    res.json({ message: 'Order deleted' });
+  } else {
+    res.status(404);
+    throw new Error('Order not found');
+  }
+});
+
+// @desc    Create Razorpay order
+// @route   POST /api/orders/:id/razorpay
+// @access  Private
+const createRazorpayOrderHandler = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id);
+
+  if (order) {
+    try {
+      const razorpayOrder = await createRazorpayOrder(
+        order.totalPrice,
+        'INR',
+        `order_${order._id}`
+      );
+
+      res.json({
+        id: razorpayOrder.id,
+        amount: razorpayOrder.amount,
+        currency: razorpayOrder.currency,
+        receipt: razorpayOrder.receipt,
+      });
+    } catch (error) {
+      res.status(400);
+      throw new Error('Failed to create Razorpay order');
+    }
+  } else {
+    res.status(404);
+    throw new Error('Order not found');
+  }
+});
+
 export {
   addOrderItems,
   getMyOrders,
@@ -155,4 +220,6 @@ export {
   updateOrderToPaid,
   updateOrderToDelivered,
   getOrders,
+  deleteOrder,
+  createRazorpayOrderHandler,
 };
