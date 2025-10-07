@@ -1,5 +1,12 @@
+/* Import Boodmo Theme */
+@import url('./boodmo-theme.css');
+@import url('./boodmo-components.css');
+@import url('./layout-structure.css');
+
 main {
   min-height: 80vh;
+  background-color: #F4F6F8;
+  padding: 2rem 0;
 }
 
 .rating span {

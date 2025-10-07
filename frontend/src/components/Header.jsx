@@ -31,28 +31,31 @@ const Header = () => {
   };
 
   return (
-    <header>
-      <Navbar bg='primary' variant='dark' expand='lg' collapseOnSelect>
+    <header className="main-header">
+      <Navbar variant='light' expand='lg' collapseOnSelect className="main-navbar">
         <Container>
-          <Navbar.Brand as={Link} to='/'>
-            <img src={logo} alt='ProShop' />
-            ProShop
+          <Navbar.Brand as={Link} to='/' className="brand-logo">
+            <img src={logo} alt='ProShop' className="logo-image" />
+            <span className="brand-text">Auto Parts</span>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
-            <Nav className='ms-auto'>
-              <SearchBox />
-              <Nav.Link as={Link} to='/cart'>
-                <FaShoppingCart /> Cart
+            <Nav className='ms-auto align-items-center'>
+              <div className="search-container">
+                <SearchBox />
+              </div>
+              <Nav.Link as={Link} to='/cart' className="nav-cart-link">
+                <FaShoppingCart className="cart-icon" /> 
+                <span className="cart-text">Cart</span>
                 {cartItems.length > 0 && (
-                  <Badge pill bg='success' style={{ marginLeft: '5px' }}>
+                  <Badge pill bg='success' className="cart-badge">
                     {cartItems.reduce((a, c) => a + c.qty, 0)}
                   </Badge>
                 )}
               </Nav.Link>
               {userInfo ? (
                 <>
-                  <NavDropdown title={userInfo.name} id='username'>
+                  <NavDropdown title={userInfo.name} id='username' className="user-dropdown">
                     <NavDropdown.Item as={Link} to='/profile'>
                       Profile
                     </NavDropdown.Item>
@@ -62,14 +65,15 @@ const Header = () => {
                   </NavDropdown>
                 </>
               ) : (
-                <Nav.Link as={Link} to='/login'>
-                  <FaUser /> Sign In
+                <Nav.Link as={Link} to='/login' className="nav-auth-link">
+                  <FaUser className="user-icon" /> 
+                  <span className="auth-text">Sign In</span>
                 </Nav.Link>
               )}
 
               {/* Admin Links */}
               {userInfo && userInfo.isAdmin && (
-                <NavDropdown title='Admin' id='adminmenu'>
+                <NavDropdown title='Admin' id='adminmenu' className="admin-dropdown">
                   <NavDropdown.Item as={Link} to='/admin/productlist'>
                     Products
                   </NavDropdown.Item>

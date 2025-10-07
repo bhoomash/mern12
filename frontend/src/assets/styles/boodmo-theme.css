@@ -1,0 +1,387 @@
+/* Boodmo-Inspired Theme for ProShop */
+
+:root {
+  /* Modern Clean Colors - Inspired by Dribbble Design */
+  --boodmo-primary: #2B2D42;      /* Professional Dark Blue */
+  --boodmo-secondary: #EF476F;    /* Vibrant Pink Accent */
+  --boodmo-success: #06D6A0;      /* Modern Teal */
+  --boodmo-info: #118AB2;         /* Info Blue */
+  --boodmo-warning: #FFD166;      /* Warm Yellow */
+  --boodmo-danger: #EF476F;       /* Danger Pink */
+  --boodmo-light: #F8F9FA;        /* Clean Light */
+  --boodmo-dark: #2B2D42;         /* Professional Dark */
+  
+  /* Header/Navigation Colors */
+  --header-bg: #FFFFFF;           /* Clean White Header */
+  --header-text: #2B2D42;         /* Dark Text */
+  --header-accent: #EF476F;       /* Pink Accent */
+  --header-border: #E9ECEF;       /* Light Border */
+  
+  /* Additional Modern Colors */
+  --boodmo-accent: #118AB2;       /* Blue Accent */
+  --boodmo-muted: #8D99AE;        /* Modern Gray */
+  --boodmo-white: #FFFFFF;        /* Pure White */
+  --boodmo-black: #2B2D42;        /* Professional Black */
+  
+  /* Background Colors */
+  --boodmo-bg-primary: #FFFFFF;   /* Clean White Background */
+  --boodmo-bg-secondary: #F8F9FA; /* Secondary Background */
+  --boodmo-bg-card: #FFFFFF;      /* Card Background */
+  
+  /* Text Colors */
+  --boodmo-text-primary: #2B2D42;
+  --boodmo-text-secondary: #8D99AE;
+  --boodmo-text-muted: #ADB5BD;
+  --boodmo-text-white: #FFFFFF;
+  
+  /* Border Colors */
+  --boodmo-border-light: #DEE2E6;
+  --boodmo-border-primary: #1B365D;
+  --boodmo-border-secondary: #FF6B35;
+}
+
+/* Override Bootstrap Variables */
+:root,
+[data-bs-theme='light'] {
+  --bs-primary: var(--boodmo-primary);
+  --bs-primary-rgb: 27, 54, 93;
+  --bs-secondary: var(--boodmo-secondary);
+  --bs-secondary-rgb: 255, 107, 53;
+  --bs-success: var(--boodmo-success);
+  --bs-success-rgb: 40, 167, 69;
+  --bs-info: var(--boodmo-info);
+  --bs-info-rgb: 23, 162, 184;
+  --bs-warning: var(--boodmo-warning);
+  --bs-warning-rgb: 255, 193, 7;
+  --bs-danger: var(--boodmo-danger);
+  --bs-danger-rgb: 220, 53, 69;
+  --bs-light: var(--boodmo-light);
+  --bs-light-rgb: 248, 249, 250;
+  --bs-dark: var(--boodmo-dark);
+  --bs-dark-rgb: 44, 62, 80;
+  --bs-body-color: var(--boodmo-text-primary);
+  --bs-body-bg: var(--boodmo-white);
+}
+
+/* Global Body Styling */
+body {
+  background-color: var(--boodmo-bg-primary);
+  color: var(--boodmo-text-primary);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Header Navbar */
+.navbar-brand {
+  color: var(--boodmo-text-white) !important;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.navbar-nav .nav-link {
+  color: var(--boodmo-text-white) !important;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+  color: var(--boodmo-secondary) !important;
+}
+
+/* Cards */
+.card {
+  background-color: var(--boodmo-bg-card);
+  border: 1px solid var(--boodmo-border-light);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.card-title {
+  color: var(--boodmo-text-primary);
+  font-weight: 600;
+}
+
+.card-text {
+  color: var(--boodmo-text-secondary);
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: var(--boodmo-primary);
+  border-color: var(--boodmo-primary);
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #0F2A4A;
+  border-color: #0F2A4A;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(27, 54, 93, 0.3);
+}
+
+.btn-secondary {
+  background-color: var(--boodmo-secondary);
+  border-color: var(--boodmo-secondary);
+  color: var(--boodmo-text-white);
+  font-weight: 600;
+  border-radius: 8px;
+}
+
+.btn-secondary:hover {
+  background-color: #E55A2B;
+  border-color: #E55A2B;
+  color: var(--boodmo-text-white);
+}
+
+.btn-success {
+  background-color: var(--boodmo-success);
+  border-color: var(--boodmo-success);
+  border-radius: 8px;
+}
+
+.btn-outline-primary {
+  color: var(--boodmo-primary);
+  border-color: var(--boodmo-primary);
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--boodmo-primary);
+  border-color: var(--boodmo-primary);
+}
+
+/* Product Cards */
+.product-card {
+  border: none;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.product-card img {
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover img {
+  transform: scale(1.05);
+}
+
+/* Price Styling */
+.price {
+  color: var(--boodmo-secondary);
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+/* Rating Stars */
+.rating svg {
+  color: var(--boodmo-warning);
+}
+
+/* Tables */
+.table {
+  background-color: var(--boodmo-bg-card);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.table th {
+  background-color: var(--boodmo-primary);
+  color: var(--boodmo-text-white);
+  font-weight: 600;
+  border: none;
+}
+
+.table td {
+  border-color: var(--boodmo-border-light);
+  vertical-align: middle;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) > td {
+  background-color: var(--boodmo-bg-primary);
+}
+
+/* Forms */
+.form-control {
+  border-radius: 8px;
+  border: 2px solid var(--boodmo-border-light);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: var(--boodmo-primary);
+  box-shadow: 0 0 0 0.2rem rgba(27, 54, 93, 0.25);
+}
+
+.form-label {
+  color: var(--boodmo-text-primary);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+/* Alerts */
+.alert {
+  border-radius: 8px;
+  border: none;
+  font-weight: 500;
+}
+
+.alert-success {
+  background-color: rgba(40, 167, 69, 0.1);
+  color: var(--boodmo-success);
+  border-left: 4px solid var(--boodmo-success);
+}
+
+.alert-danger {
+  background-color: rgba(220, 53, 69, 0.1);
+  color: var(--boodmo-danger);
+  border-left: 4px solid var(--boodmo-danger);
+}
+
+.alert-info {
+  background-color: rgba(23, 162, 184, 0.1);
+  color: var(--boodmo-info);
+  border-left: 4px solid var(--boodmo-info);
+}
+
+.alert-warning {
+  background-color: rgba(255, 193, 7, 0.1);
+  color: #B8860B;
+  border-left: 4px solid var(--boodmo-warning);
+}
+
+/* Footer */
+footer {
+  background-color: var(--boodmo-dark);
+  color: var(--boodmo-text-white);
+}
+
+/* Badge */
+.badge {
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.badge.bg-success {
+  background-color: var(--boodmo-success) !important;
+}
+
+/* Pagination */
+.pagination .page-link {
+  color: var(--boodmo-primary);
+  border-color: var(--boodmo-border-light);
+  border-radius: 6px;
+  margin: 0 2px;
+}
+
+.pagination .page-link:hover {
+  background-color: var(--boodmo-primary);
+  border-color: var(--boodmo-primary);
+  color: var(--boodmo-text-white);
+}
+
+.pagination .page-item.active .page-link {
+  background-color: var(--boodmo-primary);
+  border-color: var(--boodmo-primary);
+}
+
+/* Loading Spinner */
+.spinner-border {
+  color: var(--boodmo-primary);
+}
+
+/* Dropdown */
+.dropdown-menu {
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item:hover {
+  background-color: var(--boodmo-bg-primary);
+  color: var(--boodmo-primary);
+}
+
+/* Search Box */
+.search-box {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+}
+
+.search-box:focus {
+  background-color: var(--boodmo-white);
+  border-color: var(--boodmo-secondary);
+  color: var(--boodmo-text-primary);
+}
+
+/* Cart Items */
+.cart-item {
+  background-color: var(--boodmo-bg-card);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--boodmo-border-light);
+}
+
+/* Product Image Hover Effect */
+.product-image {
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.product-image img {
+  transition: transform 0.3s ease;
+}
+
+.product-image:hover img {
+  transform: scale(1.08);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar-brand {
+    font-size: 1.25rem;
+  }
+  
+  .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .card {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Custom Utilities */
+.text-boodmo-primary {
+  color: var(--boodmo-primary) !important;
+}
+
+.text-boodmo-secondary {
+  color: var(--boodmo-secondary) !important;
+}
+
+.bg-boodmo-primary {
+  background-color: var(--boodmo-primary) !important;
+}
+
+.bg-boodmo-secondary {
+  background-color: var(--boodmo-secondary) !important;
+}
+
+.border-boodmo-primary {
+  border-color: var(--boodmo-primary) !important;
+}
+
+.border-boodmo-secondary {
+  border-color: var(--boodmo-secondary) !important;
+}
