@@ -33,7 +33,6 @@ const OrderScreen = () => {
   const {
     data: razorpayConfig,
     isLoading: loadingRazorpay,
-    error: errorRazorpay,
   } = useGetRazorpayKeyIdQuery();
 
   useEffect(() => {
