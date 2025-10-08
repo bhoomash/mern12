@@ -12,6 +12,7 @@ import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 
 const port = process.env.PORT || 5000;
 
+// Connect to database (non-blocking)
 connectDB();
 
 const app = express();
@@ -28,6 +29,16 @@ app.use('/api/upload', uploadRoutes);
 app.get('/api/config/razorpay', (req, res) =>
   res.send({ keyId: process.env.RAZORPAY_KEY_ID })
 );
+
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+  res.json({ 
+    status: 'OK', 
+    message: 'Server is running',
+    timestamp: new Date().toISOString(),
+    database: require('mongoose').connection.readyState === 1 ? 'Connected' : 'Disconnected'
+  });
+});
 
 if (process.env.NODE_ENV === 'production') {
   const __dirname = path.resolve();
