@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "type": "module",
   "description": "Ecommerce application built with the MERN stack",
-  "main": "server.js",
+  "main": "backend/server.js",
   "scripts": {
     "start": "node backend/server.js",
     "server": "nodemon backend/server.js",
@@ -11,8 +11,8 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "data:import": "node backend/seeder",
     "data:destroy": "node backend/seeder -d",
-    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend",
-    "generate-toc": "markdown-toc -i readme.md"
+    "build": "npm install --prefix frontend && npm run build --prefix frontend",
+    "vercel-build": "npm run build"
   },
   "author": "Brad Traversy",
   "license": "MIT",
